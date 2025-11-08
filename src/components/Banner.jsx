@@ -6,7 +6,7 @@ const Banner = () => {
 
   const navigate = useNavigate()
   return (
-    <div className='flex flex-col md:flex-row bg-[#60A5FA] rounded-lg px-6 sm:px-10 md:px-14 lg:px-12 my-20 md:mx-10 relative overflow-visible'>
+    <div className='flex flex-col md:flex-row bg-[#60A5FA] rounded-lg px-6 sm:px-10 md:px-14 lg:px-12 my-20 md:mx-10 relative overflow-hidden md:overflow-visible'>
       {/*------left side ------*/}
       <div className='flex-1 py-8 sm:py-10 md:py-16 lg:py-24 lg:pl-5'>
         <div className='text-white'>
@@ -19,9 +19,9 @@ const Banner = () => {
       </div>
 
       {/*------right side ------*/}
-      <div className='hidden md:flex md:w-1/2 justify-end items-center'>
+      <div className='hidden md:flex md:w-1/2 justify-end items-end relative min-h-[200px] md:min-h-[250px]'>
            <img 
-             className='w-[250px] absolute bottom-0 right-0 max-w-md z-10' 
+             className='w-[280px] md:w-[320px] lg:w-[380px] xl:w-[420px] h-auto object-contain relative z-10 md:translate-y-4' 
              src={assets.appointment_img} 
              alt="Banner Pet" 
            />

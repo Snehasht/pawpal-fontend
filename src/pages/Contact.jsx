@@ -1,7 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 
 const Contact = () => {
+  const navigate = useNavigate()
+  
+  const handleExplore = () => {
+    navigate('/pets')
+  }
   
   return (
     <div>
@@ -16,7 +22,12 @@ const Contact = () => {
           <p className='text-gray-500'>Tel: 01987654 <br /> Email:PawPal@gmail.com</p>
           <p className='font-semibold text-lg text-gray-600'>Volunteer at PawPal</p>
           <p className='text-gray-500'>Learn more about our teams</p>
-          <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>Explore</button>
+          <button 
+            onClick={handleExplore}
+            className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'
+          >
+            Explore
+          </button>
         </div>
       </div>
     </div>

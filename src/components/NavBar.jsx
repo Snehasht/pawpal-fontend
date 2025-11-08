@@ -7,13 +7,20 @@ const NavBar = () => {
 
     const navigate = useNavigate();
 
-    const {token,setToken,userData} =useContext(AppContext)
+    const {token, setToken, userData, setUserData} = useContext(AppContext)
 
     const [showMenu, setShowMenu] = useState(false)
 
     const logout = () => {
-        setToken('false')
+        // Clear token
+        setToken(null)
         localStorage.removeItem('token')
+        // Clear user data immediately
+        setUserData({})
+        // Navigate to home page
+        navigate('/')
+        // Close profile menu if open
+        setShowProfileMenu(false)
     }
     // 💡 NEW STATE: Control the profile dropdown visibility
     const [showProfileMenu, setShowProfileMenu] = useState(false) 
@@ -70,7 +77,10 @@ const NavBar = () => {
                     </div>
                 </div>
             </div>
-            : <button onClick={()=>navigate('/Login')} className=' bg-[#60A5FA] text-white px-8 py-3 rounded-full font-light hidden md:block ' >Create Account</button>
+            : <div className='flex items-center gap-3 hidden md:flex'>
+                <button onClick={()=>navigate('/Login?mode=login')} className='border border-[#60A5FA] text-[#60A5FA] px-8 py-3 rounded-full font-light hover:bg-[#60A5FA] hover:text-white transition-all duration-300' >Login</button>
+                <button onClick={()=>navigate('/Login?mode=signup')} className='bg-[#60A5FA] text-white px-8 py-3 rounded-full font-light hover:opacity-90 transition-all duration-300' >Create Account</button>
+              </div>
         }
         <img onClick={()=>setShowMenu(true)} className='w-6 md:hidden' src={assets.menu} alt="" />
         {/*----mobile menu ------ */}
@@ -85,6 +95,12 @@ const NavBar = () => {
             <NavLink  onClick={()=> setShowMenu(false)} to='/about'><p className='px-4 py-2 rounded inline-block'>ABOUT</p></NavLink>
             <NavLink  onClick={()=> setShowMenu(false)} to='/contact'><p className='px-4 py-2 rounded inline-block'>CONTACT</p></NavLink>
           </ul>
+          {!token && (
+            <div className='flex flex-col items-center gap-3 mt-5 px-5'>
+              <button onClick={()=> {navigate('/Login?mode=login'); setShowMenu(false);}} className='w-full border border-[#60A5FA] text-[#60A5FA] px-8 py-3 rounded-full font-light hover:bg-[#60A5FA] hover:text-white transition-all duration-300' >Login</button>
+              <button onClick={()=> {navigate('/Login?mode=signup'); setShowMenu(false);}} className='w-full bg-[#60A5FA] text-white px-8 py-3 rounded-full font-light hover:opacity-90 transition-all duration-300' >Create Account</button>
+            </div>
+          )}
         </div>
        
       </div>
