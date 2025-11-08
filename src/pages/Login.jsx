@@ -90,9 +90,15 @@ const onSubmitHandler = async (event) => {
       
       const {data} = await axios.post(backendUrl +'/api/user/register', {name,password,email})
       if (data.success) {
-        localStorage.setItem('token',data.token)
-        setToken(data.token)
-        toast.success('Account created successfully!')
+        if (data.requiresVerification) {
+          toast.success(data.message || 'Registration successful! Please check your email for the OTP code.')
+          // Redirect to OTP verification page with email
+          navigate(`/verify-otp?email=${encodeURIComponent(data.email || email)}`)
+        } else {
+          localStorage.setItem('token',data.token)
+          setToken(data.token)
+          toast.success('Account created successfully!')
+        }
       } else{
         toast.error(data.message)
       }
@@ -105,7 +111,13 @@ const onSubmitHandler = async (event) => {
         setToken(data.token)
         toast.success('Login successful!')
       } else{
-        toast.error(data.message)
+        if (data.requiresVerification) {
+          toast.error(data.message)
+          // Show option to resend verification email
+          setState('Sign Up') // Switch to sign up to show resend option
+        } else {
+          toast.error(data.message)
+        }
       }
 
     }
