@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+/* Apply Outfit font globally */
+* {
+  font-family: "Outfit", sans-serif;
+}
+
+/* Hide all hr by default */
+ul li + hr {
+  display: none;
+  border: none;
+  outline: none;
+  height: 0.1rem; /* same as h-0.5 */
+  background-color: #0f0f10; /* primary color */
+  width: 90%; /* w-3/5 */
+  margin: 0 auto; /* m-auto */
+}
+
+/* Show hr on hover of the parent NavLink */
+ul a:hover hr {
+  display: block;
+}
+
+/* Show hr if NavLink has "active" class */
+ul a.active hr {
+  display: block;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  @apply hidden;
+}
+
+@media (max-width:740px) {
+  .active p{
+    @apply text-white bg-[#60A5FA]
+  }
+}
