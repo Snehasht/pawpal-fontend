@@ -1,17 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../context/AppContextProvider";
 import {assets} from "../assets/assets"
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
   const { userData, setUserData, token, backendUrl, loadUserProfileData } = useContext(AppContext);
-
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
   const [image,setImage] = useState(false)
 
-  // Prevent rendering before userData is available
-  if (!userData) {
+  // Redirect to login if no token
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
+  // Prevent rendering before userData is available or if no token
+  if (!token) {
+    return null; // Will redirect via useEffect
+  }
+
+  if (!userData || Object.keys(userData).length === 0) {
     return <p className="text-center text-gray-500 mt-10">Loading profile...</p>;
   }
   const updateUserProfileData = async () => {

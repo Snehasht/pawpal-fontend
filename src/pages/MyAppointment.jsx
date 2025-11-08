@@ -4,10 +4,12 @@ import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const MyAppointment = () => {
 
-  const {backendUrl, token, getPetsData} = useContext(AppContext) 
+  const {backendUrl, token, getPetsData} = useContext(AppContext)
+  const navigate = useNavigate() 
 
   const [appointments,setAppointments] = useState([])
   const [selectedAppointment, setSelectedAppointment] = useState(null)
@@ -204,22 +206,32 @@ const payOnline = async (appointmentId) => {
     setSelectedAppointment(null)
   }
 
+  // Redirect to login if no token
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
   useEffect(()=>{
     if (token) {
       getUserAppointments()
+    } else {
+      // Clear appointments if logged out
+      setAppointments([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[token])
 
   // Refresh appointments when returning from payment or when page becomes visible
   useEffect(() => {
+    if (!token) return; // Early return inside useEffect is fine
+    
     const handleFocus = () => {
-      if (token) {
-        getUserAppointments()
-      }
+      getUserAppointments()
     }
     const handleVisibilityChange = () => {
-      if (!document.hidden && token) {
+      if (!document.hidden) {
         getUserAppointments()
       }
     }
@@ -231,6 +243,11 @@ const payOnline = async (appointmentId) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
+
+  // Don't render if no token (will redirect)
+  if (!token) {
+    return null;
+  }
 
   return (
     <div>

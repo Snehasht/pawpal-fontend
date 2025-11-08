@@ -10,6 +10,8 @@ import MyAppointment from './pages/MyAppointment'
 import Appointment from './pages/Appointment'
 import PaymentSuccess from './pages/PaymentSuccess'
 import PaymentFailure from './pages/PaymentFailure'
+import VerifyEmail from './pages/VerifyEmail'
+import OTPVerification from './pages/OTPVerification'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,6 +35,8 @@ const App = () => {
 <Route path='/appointment/:petId' element={<Appointment />} />
 <Route path='/payment/success' element={<PaymentSuccess />} />
 <Route path='/payment/failure' element={<PaymentFailure />} />
+<Route path='/verify-email' element={<VerifyEmail />} />
+<Route path='/verify-otp' element={<OTPVerification />} />
 
       </Routes>
       <Footer />
